@@ -1,0 +1,10 @@
+{
+  "name": "chrome-power-jojo",
+  "description": "Activate Manga Sound Effect like JoJo",
+  "version": "1.0.0",
+  "author": "matzkoh",
+  "license": "MIT",
+  "scripts": {
+    "package": "rm -rf dist && mkdir dist && zip -rq dist/package.zip src"
+  }
+}

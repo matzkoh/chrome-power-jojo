@@ -1,0 +1,63 @@
+.outer {
+  position: absolute;
+  display: flex;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: 0.2s 1s ease-in;
+}
+
+.outer.enter-active {
+  opacity: 1;
+}
+
+.jojo {
+  font: normal normal normal 200px/1 "jojomix";
+  animation: 50ms shake infinite, 100ms vibrate-small infinite;
+}
+
+.jojo-a::before { content: "a" }
+.jojo-b::before { content: "b" }
+.jojo-c::before { content: "c" }
+.jojo-d::before { content: "d" }
+.jojo-e::before { content: "e" }
+.jojo-f::before { content: "f" }
+.jojo-g::before { content: "g" }
+.jojo-h::before { content: "h" }
+.jojo-i::before { content: "i" }
+.jojo-j::before { content: "j" }
+.jojo-k::before { content: "k" }
+.jojo-l::before { content: "l" }
+.jojo-m::before { content: "m" }
+.jojo-n::before { content: "n" }
+.jojo-o::before { content: "o" }
+.jojo-p::before { content: "p" }
+.jojo-q::before { content: "q" }
+.jojo-r::before { content: "r" }
+.jojo-s::before { content: "s" }
+.jojo-t::before { content: "t" }
+.jojo-u::before { content: "u" }
+.jojo-v::before { content: "v" }
+.jojo-w::before { content: "w" }
+.jojo-x::before { content: "x" }
+.jojo-y::before { content: "y" }
+.jojo-z::before { content: "z" }
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+}
+
+@keyframes vibrate-small {
+  0%,
+  100% {
+    margin-left: -0.15rem;
+  }
+  50% {
+    margin-left: 0.15rem;
+  }
+}

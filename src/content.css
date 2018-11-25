@@ -1,0 +1,42 @@
+@font-face {
+  font-family: "jojomix";
+  src: url("chrome-extension://__MSG_@@extension_id__/fonts/JOJOMIX_.TTF") format("truetype");
+}
+
+.jojo-effect-press > body {
+  overflow-x: hidden;
+  animation: 0.1s jojo-effect-vibrate-large infinite;
+}
+
+#jojo-effect {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  text-shadow: 0 0 5px #fff;
+  z-index: 2147483647;
+  transform: translate3d(0, 0, 0);
+  pointer-events: none;
+}
+
+.jojo-effect-press #jojo-effect {
+  background: url("chrome-extension://__MSG_@@extension_id__/images/manga.png") no-repeat;
+  background-size: 100% 100%;
+}
+
+@keyframes jojo-effect-vibrate-large {
+  0%,
+  100% {
+    transform: translate(-3px, -3px);
+  }
+  25% {
+    transform: translate(3px, 3px);
+  }
+  50% {
+    transform: translate(-3px, 3px);
+  }
+  75% {
+    transform: translate(3px, -3px);
+  }
+}
