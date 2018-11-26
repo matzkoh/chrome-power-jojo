@@ -1,18 +1,59 @@
+.manga-effect {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: grid;
+  grid-template-columns: min-content auto;
+  grid-template-rows: min-content auto;
+  animation: 50ms shake infinite;
+}
+
+:host-context(:root:not(.jojo-effect-press)) .manga-effect {
+  display: none;
+}
+
+.manga-effect-cell {
+  background: url("chrome-extension://__MSG_@@extension_id__/images/manga.png") no-repeat;
+  background-size: 200% 200%;
+}
+
+.manga-effect-cell.top-left {
+  background-position: top left;
+}
+
+.manga-effect-cell.top-right {
+  background-position: top right;
+}
+
+.manga-effect-cell.bottom-left {
+  background-position: bottom left;
+}
+
+.manga-effect-cell.bottom-right {
+  background-position: bottom right;
+}
+
 .outer {
   position: absolute;
   display: flex;
   opacity: 0;
   transform: translate(-50%, -50%);
-  transition: 0.2s 1s ease-in;
+  transition: 0.2s 0.5s ease-in;
 }
 
 .outer.enter-active {
   opacity: 1;
 }
 
+.inner {
+  display: flex;
+  animation: 100ms manga-effect infinite;
+}
+
 .jojo {
   font: normal normal normal 200px/1 "jojomix";
-  animation: 50ms shake infinite, 100ms vibrate-small infinite;
 }
 
 .jojo-a::before { content: "a" }
@@ -42,22 +83,18 @@
 .jojo-y::before { content: "y" }
 .jojo-z::before { content: "z" }
 
-@keyframes shake {
-  0%,
-  100% {
-    transform: rotate(-2deg);
-  }
+@keyframes manga-effect {
   50% {
-    transform: rotate(2deg);
+    transform: scale(0.95);
   }
 }
 
-@keyframes vibrate-small {
+@keyframes shake {
   0%,
   100% {
-    margin-left: -0.15rem;
+    transform: rotate(-0.2deg);
   }
   50% {
-    margin-left: 0.15rem;
+    transform: rotate(0.2deg);
   }
 }

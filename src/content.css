@@ -5,7 +5,7 @@
 
 .jojo-effect-press > body {
   overflow-x: hidden;
-  animation: 0.1s jojo-effect-vibrate-large infinite;
+  animation: 50ms jojo-effect-vibrate-large infinite;
 }
 
 #jojo-effect {
@@ -16,13 +16,7 @@
   height: 100vh;
   text-shadow: 0 0 5px #fff;
   z-index: 2147483647;
-  transform: translate3d(0, 0, 0);
   pointer-events: none;
-}
-
-.jojo-effect-press #jojo-effect {
-  background: url("chrome-extension://__MSG_@@extension_id__/images/manga.png") no-repeat;
-  background-size: 100% 100%;
 }
 
 @keyframes jojo-effect-vibrate-large {
