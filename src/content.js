@@ -31,6 +31,7 @@ function showRandomJojo() {
 
 document.addEventListener('keydown', event => {
   if (
+    !event.isTrusted ||
     event.ctrlKey ||
     event.metaKey ||
     /^(?:F\d+|CapsLock|Escape|Tab)$/.test(event.code) ||
@@ -56,6 +57,10 @@ document.addEventListener('keydown', event => {
 });
 
 document.addEventListener('keyup', event => {
+  if (!event.isTrusted) {
+    return;
+  }
+
   delete keys[event.code];
   toggleHtmlClass();
 });
