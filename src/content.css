@@ -3,23 +3,7 @@
   src: url("chrome-extension://__MSG_@@extension_id__/fonts/JOJOMIX_.TTF") format("truetype");
 }
 
-.jojo-effect-press > body {
-  overflow-x: hidden;
-  animation: 50ms jojo-effect-vibrate-large infinite;
-}
-
-#jojo-effect {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  text-shadow: 0 0 5px #fff;
-  z-index: 2147483647;
-  pointer-events: none;
-}
-
-@keyframes jojo-effect-vibrate-large {
+@keyframes jojo-effect-vibrate {
   0%,
   100% {
     transform: translate(-3px, -3px);
@@ -33,4 +17,20 @@
   75% {
     transform: translate(3px, -3px);
   }
+}
+
+.jojo-effect-vibrate > body {
+  overflow-x: hidden;
+  animation: 50ms jojo-effect-vibrate infinite;
+}
+
+#jojo-effect {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  text-shadow: 0 0 5px #fff;
+  z-index: 2147483647;
+  pointer-events: none;
 }

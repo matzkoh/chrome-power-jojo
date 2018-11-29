@@ -1,22 +1,92 @@
+const shadowHost = document.createElement('jojo-effect');
+const shadowRoot = shadowHost.attachShadow({ mode: 'closed' });
+let mangaEffectCell;
+
+shadowHost.id = 'jojo-effect';
+document.documentElement.appendChild(shadowHost);
+
 let keys = {};
 
-const el = document.createElement('jojo-effect');
-el.id = 'jojo-effect';
-const shadowRoot = el.attachShadow({ mode: 'closed' });
-shadowRoot.innerHTML = `
-  <link rel="stylesheet" href="${chrome.runtime.getURL('shadow.css')}">
-  <div class="manga-effect">
-    <div class="manga-effect-cell top-left"></div>
-    <div class="manga-effect-cell top-right"></div>
-    <div class="manga-effect-cell bottom-left"></div>
-    <div class="manga-effect-cell bottom-right"></div>
-  </div>
-`;
-const mangaEffectCell = shadowRoot.querySelector('.top-left');
-document.documentElement.appendChild(el);
+store.promise.then(state => {
+  if (!state.enableConcentrationLine) {
+    shadowHost.style.setProperty('--enableConcentrationLine', 'none');
+  }
+
+  shadowHost.style.setProperty('--concentrationOpacity', state.concentrationOpacity);
+  shadowHost.style.setProperty('--effectSize', state.effectSize);
+  shadowHost.style.setProperty('--effectOpacity', state.effectOpacity);
+  shadowHost.style.setProperty('--effectDuration', state.effectDuration);
+
+  const template = document.createElement('template');
+  template.innerHTML = `
+    <link rel="stylesheet" href=${chrome.runtime.getURL('shadow.css')}>
+    <div class="concentration-line" style="display: none;">
+      <div class="concentration-line-cell top-left"></div>
+      <div class="concentration-line-cell top-right"></div>
+      <div class="concentration-line-cell bottom-left"></div>
+      <div class="concentration-line-cell bottom-right"></div>
+    </div>
+  `;
+  shadowRoot.appendChild(template.content);
+
+  setTimeout(() => {
+    shadowRoot.querySelector('.concentration-line').removeAttribute('style');
+  }, 0);
+
+  mangaEffectCell = shadowRoot.querySelector('.top-left');
+
+  document.addEventListener('keydown', event => {
+    if (
+      !event.isTrusted ||
+      event.ctrlKey ||
+      event.metaKey ||
+      /^(?:F\d+|CapsLock|Escape|Tab)$/.test(event.code) ||
+      /^(?:Arrow|Meta|Shift|Alt|Control)/.test(event.code)
+    ) {
+      return;
+    }
+
+    setTimeout(setMangaEffectCenter, 0);
+
+    switch (keys[event.code]) {
+      case 1:
+        keys[event.code] = 2;
+        break;
+
+      case 2:
+        break;
+
+      default:
+        keys[event.code] = 1;
+        toggleHtmlClass();
+        showRandomJojo();
+        break;
+    }
+  });
+
+  document.addEventListener('keyup', event => {
+    if (!event.isTrusted) {
+      return;
+    }
+
+    delete keys[event.code];
+    toggleHtmlClass();
+  });
+
+  window.addEventListener('blur', () => {
+    keys = {};
+  });
+});
 
 function toggleHtmlClass() {
-  document.documentElement.classList.toggle('jojo-effect-press', Object.values(keys).filter(Boolean).length);
+  const pressed = Object.values(keys).filter(Boolean).length;
+  const { classList } = document.documentElement;
+
+  classList.toggle('jojo-effect-press', pressed);
+
+  if (store.state.enablePageVibration) {
+    classList.toggle('jojo-effect-vibrate', pressed);
+  }
 }
 
 function setMangaEffectCenter() {
@@ -53,62 +123,20 @@ function setMangaEffectCenter() {
 }
 
 function showRandomJojo() {
-  const rect = el.getBoundingClientRect();
   const outer = document.createElement('div');
   outer.className = 'outer enter-active';
-  outer.style.left = `${Math.random() * rect.width}px`;
-  outer.style.top = `${Math.random() * rect.height}px`;
+  outer.style.left = `${Math.random() * document.documentElement.clientWidth}px`;
+  outer.style.top = `${Math.random() * document.documentElement.clientHeight}px`;
 
-  const name = 'abcdefghijlmnopqrstuvwxyz'[(Math.random() * 25) | 0];
-  const html = [`<div class="jojo jojo-${name}"></div>`];
-  if ('abcdimsuw'.includes(name)) {
+  const effectType = 'abcdefghijlmnopqrstuvwxyz'[(Math.random() * 25) | 0];
+  const html = [`<div class="jojo jojo-${effectType}"></div>`];
+  if ('abcdimsuw'.includes(effectType)) {
     html.push('<div class="jojo jojo-k"></div>');
   }
   outer.innerHTML = ['<div class="inner">', ...html, '</div>'].join('');
 
   shadowRoot.appendChild(outer);
+
   requestAnimationFrame(() => outer.classList.remove('enter-active'));
   outer.addEventListener('transitionend', () => shadowRoot.removeChild(outer));
 }
-
-document.addEventListener('keydown', event => {
-  if (
-    !event.isTrusted ||
-    event.ctrlKey ||
-    event.metaKey ||
-    /^(?:F\d+|CapsLock|Escape|Tab)$/.test(event.code) ||
-    /^(?:Arrow|Meta|Shift|Alt|Control)/.test(event.code)
-  ) {
-    return;
-  }
-
-  setTimeout(setMangaEffectCenter, 0);
-
-  switch (keys[event.code]) {
-    case 1:
-      keys[event.code] = 2;
-      break;
-
-    case 2:
-      break;
-
-    default:
-      keys[event.code] = 1;
-      toggleHtmlClass();
-      showRandomJojo();
-      break;
-  }
-});
-
-document.addEventListener('keyup', event => {
-  if (!event.isTrusted) {
-    return;
-  }
-
-  delete keys[event.code];
-  toggleHtmlClass();
-});
-
-window.addEventListener('blur', () => {
-  keys = {};
-});

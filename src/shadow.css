@@ -1,37 +1,40 @@
-.manga-effect {
+.concentration-line {
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  display: grid;
+  display: var(--enableConcentrationLine, grid);
   grid-template-columns: min-content auto;
   grid-template-rows: min-content auto;
+  opacity: var(--concentrationOpacity);
   animation: 50ms shake infinite;
 }
 
-:host-context(:root:not(.jojo-effect-press)) .manga-effect {
-  display: none;
+:host-context(:root:not(.jojo-effect-press)) .concentration-line {
+  opacity: 0;
+  transition: opacity 100ms;
+  animation: none;
 }
 
-.manga-effect-cell {
+.concentration-line-cell {
   background: url("chrome-extension://__MSG_@@extension_id__/images/manga.png") no-repeat;
   background-size: 200% 200%;
 }
 
-.manga-effect-cell.top-left {
+.concentration-line-cell.top-left {
   background-position: top left;
 }
 
-.manga-effect-cell.top-right {
+.concentration-line-cell.top-right {
   background-position: top right;
 }
 
-.manga-effect-cell.bottom-left {
+.concentration-line-cell.bottom-left {
   background-position: bottom left;
 }
 
-.manga-effect-cell.bottom-right {
+.concentration-line-cell.bottom-right {
   background-position: bottom right;
 }
 
@@ -40,7 +43,7 @@
   display: flex;
   opacity: 0;
   transform: translate(-50%, -50%);
-  transition: 0.2s 0.5s ease-in;
+  transition: opacity 200ms calc(var(--effectDuration) * 1ms) ease-in;
 }
 
 .outer.enter-active {
@@ -49,11 +52,12 @@
 
 .inner {
   display: flex;
-  animation: 100ms manga-effect infinite;
+  opacity: var(--effectOpacity);
+  animation: 100ms concentration-line infinite;
 }
 
 .jojo {
-  font: normal normal normal 200px/1 "jojomix";
+  font: normal normal normal calc(var(--effectSize) * 1vmax)/1 "jojomix";
 }
 
 .jojo-a::before { content: "a" }
@@ -83,7 +87,7 @@
 .jojo-y::before { content: "y" }
 .jojo-z::before { content: "z" }
 
-@keyframes manga-effect {
+@keyframes concentration-line {
   50% {
     transform: scale(0.95);
   }

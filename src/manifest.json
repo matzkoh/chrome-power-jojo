@@ -8,10 +8,15 @@
   "content_scripts": [
     {
       "css": ["content.css"],
-      "js": ["content.js"],
+      "js": ["store.js", "content.js"],
       "matches": ["http://*/*", "https://*/*"]
     }
   ],
+  "permissions": ["storage"],
+  "options_ui": {
+    "page": "options.html",
+    "chrome_style": true
+  },
   "web_accessible_resources": ["shadow.css", "fonts/*", "images/*"],
   "manifest_version": 2
 }

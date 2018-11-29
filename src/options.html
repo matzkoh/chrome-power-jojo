@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Options</title>
+    <script src="store.js"></script>
+    <script src="options.js" defer></script>
+    <style>
+      fieldset:not(:first-child):not(:last-child),
+      .form-item:not(:first-child):not(:last-child) {
+        margin: 1em 0;
+      }
+      .label {
+        display: block;
+      }
+      label.checkbox {
+        display: inline-flex;
+        align-items: center;
+      }
+      .checkbox > input {
+        margin-right: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="form">
+      <fieldset>
+        <legend>キー入力</legend>
+        <div>
+          <div class="form-item">
+            <label class="checkbox"><input type="checkbox" id="enablePageVibration" /> ページを振動させる</label>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>集中線</legend>
+        <div>
+          <div class="form-item">
+            <label class="checkbox"><input type="checkbox" id="enableConcentrationLine" /> 集中線を表示する</label>
+          </div>
+          <div class="form-item">
+            <label for="concentrationOpacity" class="label">集中線の濃さ</label>
+            <input type="range" id="concentrationOpacity" list="concentrationOpacityTick" min="0" max="1" step="0.01" />
+            <datalist id="concentrationOpacityTick">
+              <option value="0"></option>
+              <option value="0.5"></option>
+              <option value="1"></option>
+            </datalist>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>エフェクト</legend>
+        <div>
+          <div class="form-item">
+            <label for="effectSize" class="label">エフェクトの大きさ</label>
+            <input type="range" id="effectSize" list="effectSizeTick" min="10" max="60" step="1" />
+            <datalist id="effectSizeTick">
+              <option value="10"></option>
+              <option value="20"></option>
+              <option value="30"></option>
+              <option value="40"></option>
+              <option value="50"></option>
+              <option value="60"></option>
+            </datalist>
+          </div>
+          <div class="form-item">
+            <label for="effectOpacity" class="label">エフェクトの濃さ</label>
+            <input type="range" id="effectOpacity" list="effectOpacityTick" min="0" max="1" step="0.01" />
+            <datalist id="effectOpacityTick">
+              <option value="0"></option>
+              <option value="0.5"></option>
+              <option value="1"></option>
+            </datalist>
+          </div>
+          <div class="form-item">
+            <label for="effectDuration" class="label">エフェクトの表示時間</label>
+            <input type="range" id="effectDuration" list="effectDurationTick" min="0" max="1000" step="1" />
+            <datalist id="effectDurationTick">
+              <option value="0"></option>
+              <option value="500"></option>
+              <option value="1000"></option>
+            </datalist>
+          </div>
+        </div>
+      </fieldset>
+      <div class="form-item"><button type="submit">保存</button></div>
+    </form>
+  </body>
+</html>
