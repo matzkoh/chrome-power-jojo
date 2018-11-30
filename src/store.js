@@ -2,7 +2,8 @@ const store = {
   state: {
     enablePageVibration: true,
     enableConcentrationLine: true,
-    concentrationOpacity: 1,
+    concentrationLineType: 'images/manga1.svg',
+    concentrationLineOpacity: 1,
     effectSize: 10,
     effectOpacity: 1,
     effectDuration: 500,

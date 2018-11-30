@@ -30,7 +30,6 @@
   top: 0;
   width: 100vw;
   height: 100vh;
-  text-shadow: 0 0 5px #fff;
   z-index: 2147483647;
   pointer-events: none;
 }

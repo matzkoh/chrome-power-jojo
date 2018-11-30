@@ -7,7 +7,7 @@
   display: var(--enableConcentrationLine, grid);
   grid-template-columns: min-content auto;
   grid-template-rows: min-content auto;
-  opacity: var(--concentrationOpacity);
+  opacity: var(--concentrationLineOpacity);
   animation: 50ms shake infinite;
 }
 
@@ -18,7 +18,7 @@
 }
 
 .concentration-line-cell {
-  background: url("chrome-extension://__MSG_@@extension_id__/images/manga.png") no-repeat;
+  background: var(--concentrationLineType) no-repeat;
   background-size: 200% 200%;
 }
 

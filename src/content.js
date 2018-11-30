@@ -12,7 +12,8 @@ store.promise.then(state => {
     shadowHost.style.setProperty('--enableConcentrationLine', 'none');
   }
 
-  shadowHost.style.setProperty('--concentrationOpacity', state.concentrationOpacity);
+  shadowHost.style.setProperty('--concentrationLineType', `url(${chrome.runtime.getURL(state.concentrationLineType)})`);
+  shadowHost.style.setProperty('--concentrationLineOpacity', state.concentrationLineOpacity);
   shadowHost.style.setProperty('--effectSize', state.effectSize);
   shadowHost.style.setProperty('--effectOpacity', state.effectOpacity);
   shadowHost.style.setProperty('--effectDuration', state.effectDuration);
