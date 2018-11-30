@@ -1,14 +1,30 @@
+@keyframes bounce {
+  50% {
+    transform: scale(0.95);
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: rotate(-0.5deg);
+  }
+  50% {
+    transform: rotate(0.5deg);
+  }
+}
+
 .concentration-line {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  top: -1rem;
+  bottom: -1rem;
+  left: -1rem;
+  right: -1rem;
   display: var(--enableConcentrationLine, grid);
   grid-template-columns: min-content auto;
   grid-template-rows: min-content auto;
   opacity: var(--concentrationLineOpacity);
-  animation: 50ms shake infinite;
+  animation: 50ms shake linear infinite;
 }
 
 :host-context(:root:not(.jojo-effect-press)) .concentration-line {
@@ -23,6 +39,8 @@
 }
 
 .concentration-line-cell.top-left {
+  width: var(--mangaEffectCenterX);
+  height: var(--mangaEffectCenterY);
   background-position: top left;
 }
 
@@ -53,7 +71,7 @@
 .inner {
   display: flex;
   opacity: var(--effectOpacity);
-  animation: 100ms concentration-line infinite;
+  animation: 100ms bounce infinite;
 }
 
 .jojo {
@@ -86,19 +104,3 @@
 .jojo-x::before { content: "x" }
 .jojo-y::before { content: "y" }
 .jojo-z::before { content: "z" }
-
-@keyframes concentration-line {
-  50% {
-    transform: scale(0.95);
-  }
-}
-
-@keyframes shake {
-  0%,
-  100% {
-    transform: rotate(-0.2deg);
-  }
-  50% {
-    transform: rotate(0.2deg);
-  }
-}

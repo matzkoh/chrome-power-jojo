@@ -1,22 +1,13 @@
 const shadowHost = document.createElement('jojo-effect');
 const shadowRoot = shadowHost.attachShadow({ mode: 'closed' });
-let mangaEffectCell;
 
 shadowHost.id = 'jojo-effect';
 document.documentElement.appendChild(shadowHost);
 
 let keys = {};
 
-store.promise.then(state => {
-  if (!state.enableConcentrationLine) {
-    shadowHost.style.setProperty('--enableConcentrationLine', 'none');
-  }
-
-  shadowHost.style.setProperty('--concentrationLineType', `url(${chrome.runtime.getURL(state.concentrationLineType)})`);
-  shadowHost.style.setProperty('--concentrationLineOpacity', state.concentrationLineOpacity);
-  shadowHost.style.setProperty('--effectSize', state.effectSize);
-  shadowHost.style.setProperty('--effectOpacity', state.effectOpacity);
-  shadowHost.style.setProperty('--effectDuration', state.effectDuration);
+store.promise.then(() => {
+  applyOptions();
 
   const template = document.createElement('template');
   template.innerHTML = `
@@ -33,8 +24,6 @@ store.promise.then(state => {
   setTimeout(() => {
     shadowRoot.querySelector('.concentration-line').removeAttribute('style');
   }, 0);
-
-  mangaEffectCell = shadowRoot.querySelector('.top-left');
 
   document.addEventListener('keydown', event => {
     if (
@@ -79,6 +68,28 @@ store.promise.then(state => {
   });
 });
 
+chrome.storage.onChanged.addListener(async () => {
+  await store.load();
+  applyOptions();
+});
+
+function applyOptions() {
+  if (store.state.enableConcentrationLine) {
+    shadowHost.style.removeProperty('--enableConcentrationLine');
+  } else {
+    shadowHost.style.setProperty('--enableConcentrationLine', 'none');
+  }
+
+  shadowHost.style.setProperty(
+    '--concentrationLineType',
+    `url(${chrome.runtime.getURL(store.state.concentrationLineType)})`,
+  );
+  shadowHost.style.setProperty('--concentrationLineOpacity', store.state.concentrationLineOpacity);
+  shadowHost.style.setProperty('--effectSize', store.state.effectSize);
+  shadowHost.style.setProperty('--effectOpacity', store.state.effectOpacity);
+  shadowHost.style.setProperty('--effectDuration', store.state.effectDuration);
+}
+
 function toggleHtmlClass() {
   const pressed = Object.values(keys).filter(Boolean).length;
   const { classList } = document.documentElement;
@@ -119,15 +130,15 @@ function setMangaEffectCenter() {
     }
   }
 
-  mangaEffectCell.style.width = width;
-  mangaEffectCell.style.height = height;
+  shadowHost.style.setProperty('--mangaEffectCenterX', width);
+  shadowHost.style.setProperty('--mangaEffectCenterY', height);
 }
 
 function showRandomJojo() {
   const outer = document.createElement('div');
   outer.className = 'outer enter-active';
-  outer.style.left = `${Math.random() * document.documentElement.clientWidth}px`;
-  outer.style.top = `${Math.random() * document.documentElement.clientHeight}px`;
+  outer.style.left = `${Math.random() * 100}%`;
+  outer.style.top = `${Math.random() * 100}%`;
 
   const effectType = 'abcdefghijlmnopqrstuvwxyz'[(Math.random() * 25) | 0];
   const html = [`<div class="jojo jojo-${effectType}"></div>`];
