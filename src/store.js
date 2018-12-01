@@ -6,6 +6,7 @@ const defaultState = {
   effectSize: 10,
   effectOpacity: 1,
   effectDuration: 500,
+  excludeUrls: '',
 };
 
 const store = {

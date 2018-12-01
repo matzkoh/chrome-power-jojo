@@ -39,8 +39,8 @@
 }
 
 .concentration-line-cell.top-left {
-  width: var(--mangaEffectCenterX);
-  height: var(--mangaEffectCenterY);
+  width: calc(var(--mangaEffectCenterX, 50vw) + 1rem);
+  height: calc(var(--mangaEffectCenterY, 50vh) + 1rem);
   background-position: top left;
 }
 

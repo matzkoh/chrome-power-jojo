@@ -8,6 +8,19 @@
     <script src="store.js"></script>
     <script src="options.js" defer></script>
     <style>
+      .flex {
+        display: flex;
+      }
+      .spacer {
+        flex-grow: 1;
+      }
+      fieldset {
+        border: 1px solid #0003;
+      }
+      legend {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+      }
       fieldset:not(:first-child):not(:last-child),
       .form-item:not(:first-child):not(:last-child) {
         margin: 1em 0;
@@ -39,6 +52,14 @@
         display: block;
         width: 10rem;
         height: 10rem;
+      }
+      .textarea-raw {
+        display: block;
+        width: 100%;
+        min-height: 8rem;
+        padding: 0;
+        border: none;
+        resize: vertical;
       }
     </style>
   </head>
@@ -124,8 +145,25 @@
           </div>
         </div>
       </fieldset>
+      <fieldset>
+        <legend>実行しないページ</legend>
+        <div>
+          <div class="form-item">
+            <textarea
+              class="textarea-raw"
+              name="excludeUrls"
+              id="excludeUrls"
+              placeholder="https://example.com/&#10;https://github.com/&#10;https://www.google.co.jp/search?"
+            ></textarea>
+          </div>
+        </div>
+      </fieldset>
       <div class="form-item">
-        <button type="submit">保存</button><button type="button" class="reset">初期値に戻す</button>
+        <div class="flex">
+          <button type="button" class="reset">初期値に戻す</button>
+          <div class="spacer"></div>
+          <button type="button" class="cancel">キャンセル</button><button type="submit">保存</button>
+        </div>
       </div>
     </form>
   </body>

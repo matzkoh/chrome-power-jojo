@@ -2,12 +2,26 @@ const shadowHost = document.createElement('jojo-effect');
 const shadowRoot = shadowHost.attachShadow({ mode: 'closed' });
 
 shadowHost.id = 'jojo-effect';
-document.documentElement.appendChild(shadowHost);
 
 let keys = {};
 
 store.promise.then(() => {
+  const isExcluded = store.state.excludeUrls
+    .split('\n')
+    .map(t => t.trim())
+    .filter(Boolean)
+    .some(prefix => location.href.startsWith(prefix));
+
+  if (isExcluded) {
+    return;
+  }
+
   applyOptions();
+
+  chrome.storage.onChanged.addListener(async () => {
+    await store.load();
+    applyOptions();
+  });
 
   const template = document.createElement('template');
   template.innerHTML = `
@@ -20,6 +34,8 @@ store.promise.then(() => {
     </div>
   `;
   shadowRoot.appendChild(template.content);
+
+  document.documentElement.appendChild(shadowHost);
 
   setTimeout(() => {
     shadowRoot.querySelector('.concentration-line').removeAttribute('style');
@@ -66,11 +82,6 @@ store.promise.then(() => {
   window.addEventListener('blur', () => {
     keys = {};
   });
-});
-
-chrome.storage.onChanged.addListener(async () => {
-  await store.load();
-  applyOptions();
 });
 
 function applyOptions() {
@@ -149,6 +160,8 @@ function showRandomJojo() {
 
   shadowRoot.appendChild(outer);
 
-  requestAnimationFrame(() => outer.classList.remove('enter-active'));
-  outer.addEventListener('transitionend', () => shadowRoot.removeChild(outer));
+  requestAnimationFrame(() => {
+    outer.classList.remove('enter-active');
+    outer.addEventListener('transitionend', () => shadowRoot.removeChild(outer));
+  });
 }

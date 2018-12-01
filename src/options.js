@@ -10,6 +10,7 @@ async function storeToForm() {
   form.effectSize.value = store.state.effectSize;
   form.effectOpacity.value = store.state.effectOpacity;
   form.effectDuration.value = store.state.effectDuration;
+  form.excludeUrls.value = store.state.excludeUrls;
 }
 
 async function formToStore() {
@@ -22,6 +23,7 @@ async function formToStore() {
   store.state.effectSize = form.effectSize.value;
   store.state.effectOpacity = form.effectOpacity.value;
   store.state.effectDuration = form.effectDuration.value;
+  store.state.excludeUrls = form.excludeUrls.value;
 }
 
 storeToForm().then(() => {
@@ -37,5 +39,9 @@ storeToForm().then(() => {
   document.querySelector('.reset').addEventListener('click', async () => {
     await store.reset();
     await storeToForm();
+  });
+
+  document.querySelector('.cancel').addEventListener('click', () => {
+    window.close();
   });
 });
