@@ -7,14 +7,14 @@
   },
   "content_scripts": [
     {
-      "css": ["content.css"],
-      "js": ["store.js", "content.js"],
-      "matches": ["http://*/*", "https://*/*"]
+      "css": ["content/content.css"],
+      "js": ["store.js", "content/content.js"],
+      "matches": ["*://*/*"]
     }
   ],
   "permissions": ["storage"],
   "options_ui": {
-    "page": "options.html",
+    "page": "options/options.html",
     "chrome_style": true
   },
   "web_accessible_resources": ["shadow.css", "fonts/*", "images/*"],

@@ -5,63 +5,9 @@
     <meta name="viewport" content="width=device-width" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Options</title>
-    <script src="store.js"></script>
+    <link rel="stylesheet" href="options.css" />
+    <script src="../store.js"></script>
     <script src="options.js" defer></script>
-    <style>
-      .flex {
-        display: flex;
-      }
-      .spacer {
-        flex-grow: 1;
-      }
-      fieldset {
-        border: 1px solid #0003;
-      }
-      legend {
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
-      }
-      fieldset:not(:first-child):not(:last-child),
-      .form-item:not(:first-child):not(:last-child) {
-        margin: 1em 0;
-      }
-      .label {
-        display: block;
-      }
-      label.checkbox {
-        display: inline-flex;
-        align-items: center;
-      }
-      .checkbox > input[type='checkbox'] {
-        margin-right: 0.5rem;
-      }
-      .radio-element-container {
-        display: flex;
-      }
-      .radio-element > input[type='radio'] {
-        display: none;
-      }
-      .radio-element-content {
-        padding: 0.5rem;
-        border-bottom: 0.5rem dotted transparent;
-      }
-      .radio-element > input[type='radio']:checked + .radio-element-content {
-        border-color: #0008;
-      }
-      .radio-element-content > img {
-        display: block;
-        width: 10rem;
-        height: 10rem;
-      }
-      .textarea-raw {
-        display: block;
-        width: 100%;
-        min-height: 8rem;
-        padding: 0;
-        border: none;
-        resize: vertical;
-      }
-    </style>
   </head>
   <body>
     <form id="form">
@@ -69,7 +15,10 @@
         <legend>ページ</legend>
         <div>
           <div class="form-item">
-            <label class="checkbox"><input type="checkbox" name="enablePageVibration" /> ページを振動させる</label>
+            <label class="checkbox"
+              ><input type="checkbox" name="enablePageVibration" />
+              ページを振動させる</label
+            >
           </div>
         </div>
       </fieldset>
@@ -77,23 +26,40 @@
         <legend>集中線</legend>
         <div>
           <div class="form-item">
-            <label class="checkbox"><input type="checkbox" name="enableConcentrationLine" /> 集中線を表示する</label>
+            <label class="checkbox"
+              ><input type="checkbox" name="enableConcentrationLine" />
+              集中線を表示する</label
+            >
           </div>
           <div class="form-item">
             <label class="label">集中線の種類</label>
             <div class="radio-element-container">
               <label class="radio-element">
-                <input type="radio" name="concentrationLineType" value="images/manga1.svg" />
-                <div class="radio-element-content"><img src="images/manga1.svg" draggable="false" /></div>
+                <input
+                  type="radio"
+                  name="concentrationLineType"
+                  value="../images/manga1.svg"
+                />
+                <div class="radio-element-content">
+                  <img src="../images/manga1.svg" draggable="false" />
+                </div>
               </label>
               <label class="radio-element">
-                <input type="radio" name="concentrationLineType" value="images/manga2.svg" />
-                <div class="radio-element-content"><img src="images/manga2.svg" draggable="false" /></div>
+                <input
+                  type="radio"
+                  name="concentrationLineType"
+                  value="../images/manga2.svg"
+                />
+                <div class="radio-element-content">
+                  <img src="../images/manga2.svg" draggable="false" />
+                </div>
               </label>
             </div>
           </div>
           <div class="form-item">
-            <label for="concentrationLineOpacity" class="label">集中線の濃さ</label>
+            <label for="concentrationLineOpacity" class="label"
+              >集中線の濃さ</label
+            >
             <input
               type="range"
               name="concentrationLineOpacity"
@@ -115,7 +81,14 @@
         <div>
           <div class="form-item">
             <label for="effectSize" class="label">エフェクトの大きさ</label>
-            <input type="range" name="effectSize" list="effectSizeTick" min="10" max="60" step="1" />
+            <input
+              type="range"
+              name="effectSize"
+              list="effectSizeTick"
+              min="10"
+              max="60"
+              step="1"
+            />
             <datalist id="effectSizeTick">
               <option value="10"></option>
               <option value="20"></option>
@@ -127,7 +100,14 @@
           </div>
           <div class="form-item">
             <label for="effectOpacity" class="label">エフェクトの濃さ</label>
-            <input type="range" name="effectOpacity" list="effectOpacityTick" min="0" max="1" step="0.01" />
+            <input
+              type="range"
+              name="effectOpacity"
+              list="effectOpacityTick"
+              min="0"
+              max="1"
+              step="0.01"
+            />
             <datalist id="effectOpacityTick">
               <option value="0"></option>
               <option value="0.5"></option>
@@ -135,8 +115,17 @@
             </datalist>
           </div>
           <div class="form-item">
-            <label for="effectDuration" class="label">エフェクトの表示時間</label>
-            <input type="range" name="effectDuration" list="effectDurationTick" min="0" max="1000" step="1" />
+            <label for="effectDuration" class="label"
+              >エフェクトの表示時間</label
+            >
+            <input
+              type="range"
+              name="effectDuration"
+              list="effectDurationTick"
+              min="0"
+              max="1000"
+              step="1"
+            />
             <datalist id="effectDurationTick">
               <option value="0"></option>
               <option value="500"></option>
@@ -162,7 +151,8 @@
         <div class="flex">
           <button type="button" class="reset">初期値に戻す</button>
           <div class="spacer"></div>
-          <button type="button" class="cancel">キャンセル</button><button type="submit">保存</button>
+          <button type="button" class="cancel">キャンセル</button
+          ><button type="submit">保存</button>
         </div>
       </div>
     </form>
