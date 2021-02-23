@@ -23,14 +23,14 @@
   display: var(--enableConcentrationLine, grid);
   grid-template-rows: min-content auto;
   grid-template-columns: min-content auto;
-  opacity: var(--concentrationLineOpacity);
-  animation: 50ms shake linear infinite;
-}
-
-:host-context(:root:not(.jojo-effect-press)) .concentration-line {
   opacity: 0;
   transition: opacity 100ms;
-  animation: none;
+}
+
+:host-context(:root.jojo-effect-press) .concentration-line {
+  opacity: var(--concentrationLineOpacity);
+  transition: none;
+  animation: 50ms shake linear infinite;
 }
 
 .concentration-line-cell {

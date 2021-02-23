@@ -1,9 +1,22 @@
-const shadowHost = document.createElement('jojo-effect')
-const shadowRoot = shadowHost.attachShadow({ mode: 'closed' })
+const activeKeys = new Set()
 
+const shadowHost = document.createElement('jojo-effect')
 shadowHost.id = 'jojo-effect'
 
-const keys = new Set()
+const shadowRoot = shadowHost.attachShadow({ mode: 'closed' })
+shadowRoot.innerHTML = `
+  <link
+    rel="stylesheet"
+    href=${chrome.runtime.getURL('content/shadow.css')}
+    onload="nextElementSibling.removeAttribute('style')"
+  />
+  <div class="concentration-line" style="display: none;">
+    <div class="concentration-line-cell top-left"></div>
+    <div class="concentration-line-cell top-right"></div>
+    <div class="concentration-line-cell bottom-left"></div>
+    <div class="concentration-line-cell bottom-right"></div>
+  </div>
+`
 
 store.promise.then(() => {
   const isExcluded = store.state.excludeUrls
@@ -12,10 +25,12 @@ store.promise.then(() => {
     .filter(Boolean)
     .some(prefix => location.href.startsWith(prefix))
 
-  if (isExcluded) {
-    return
+  if (!isExcluded) {
+    init()
   }
+})
 
+function init() {
   applyOptions()
 
   chrome.storage.onChanged.addListener(async () => {
@@ -23,23 +38,7 @@ store.promise.then(() => {
     applyOptions()
   })
 
-  const template = document.createElement('template')
-  template.innerHTML = `
-    <link rel="stylesheet" href=${chrome.runtime.getURL('content/shadow.css')}>
-    <div class="concentration-line" style="display: none;">
-      <div class="concentration-line-cell top-left"></div>
-      <div class="concentration-line-cell top-right"></div>
-      <div class="concentration-line-cell bottom-left"></div>
-      <div class="concentration-line-cell bottom-right"></div>
-    </div>
-  `
-  shadowRoot.append(template.content)
-
   document.documentElement.append(shadowHost)
-
-  setTimeout(() => {
-    shadowRoot.querySelector('.concentration-line').removeAttribute('style')
-  }, 0)
 
   document.addEventListener(
     'keydown',
@@ -56,8 +55,8 @@ store.promise.then(() => {
 
       setTimeout(setMangaEffectCenter, 0)
 
-      if (!keys.has(event.code)) {
-        keys.add(event.code)
+      if (!activeKeys.has(event.code)) {
+        activeKeys.add(event.code)
         toggleHtmlClass()
         showRandomJojo()
       }
@@ -72,7 +71,7 @@ store.promise.then(() => {
         return
       }
 
-      keys.delete(event.code)
+      activeKeys.delete(event.code)
       toggleHtmlClass()
     },
     { capture: true, passive: true },
@@ -81,11 +80,11 @@ store.promise.then(() => {
   window.addEventListener(
     'blur',
     () => {
-      keys.clear()
+      activeKeys.clear()
     },
     { capture: true, passive: true },
   )
-})
+}
 
 function applyOptions() {
   if (store.state.enableConcentrationLine) {
@@ -94,18 +93,18 @@ function applyOptions() {
     shadowHost.style.setProperty('--enableConcentrationLine', 'none')
   }
 
-  shadowHost.style.setProperty(
-    '--concentrationLineType',
-    `url(${chrome.runtime.getURL(store.state.concentrationLineType)})`,
-  )
   shadowHost.style.setProperty('--concentrationLineOpacity', store.state.concentrationLineOpacity)
   shadowHost.style.setProperty('--effectSize', store.state.effectSize)
   shadowHost.style.setProperty('--effectOpacity', store.state.effectOpacity)
   shadowHost.style.setProperty('--effectDuration', store.state.effectDuration)
+  shadowHost.style.setProperty(
+    '--concentrationLineType',
+    `url(${chrome.runtime.getURL(store.state.concentrationLineType)})`,
+  )
 }
 
 function toggleHtmlClass() {
-  const pressed = !!keys.size
+  const pressed = !!activeKeys.size
   const { classList } = document.documentElement
 
   classList.toggle('jojo-effect-press', pressed)
