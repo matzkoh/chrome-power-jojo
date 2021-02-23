@@ -3,7 +3,7 @@ const shadowRoot = shadowHost.attachShadow({ mode: 'closed' })
 
 shadowHost.id = 'jojo-effect'
 
-let keys = {}
+const keys = new Set()
 
 store.promise.then(() => {
   const isExcluded = store.state.excludeUrls
@@ -56,19 +56,10 @@ store.promise.then(() => {
 
       setTimeout(setMangaEffectCenter, 0)
 
-      switch (keys[event.code]) {
-        case 1:
-          keys[event.code] = 2
-          break
-
-        case 2:
-          break
-
-        default:
-          keys[event.code] = 1
-          toggleHtmlClass()
-          showRandomJojo()
-          break
+      if (!keys.has(event.code)) {
+        keys.add(event.code)
+        toggleHtmlClass()
+        showRandomJojo()
       }
     },
     { capture: true, passive: true },
@@ -81,7 +72,7 @@ store.promise.then(() => {
         return
       }
 
-      delete keys[event.code]
+      keys.delete(event.code)
       toggleHtmlClass()
     },
     { capture: true, passive: true },
@@ -90,7 +81,7 @@ store.promise.then(() => {
   window.addEventListener(
     'blur',
     () => {
-      keys = {}
+      keys.clear()
     },
     { capture: true, passive: true },
   )
@@ -114,7 +105,7 @@ function applyOptions() {
 }
 
 function toggleHtmlClass() {
-  const pressed = Object.values(keys).filter(Boolean).length
+  const pressed = !!keys.size
   const { classList } = document.documentElement
 
   classList.toggle('jojo-effect-press', pressed)
