@@ -6,5 +6,8 @@
   "license": "MIT",
   "scripts": {
     "package": "rm -rf dist && mkdir dist && zip -rq dist/package.zip src"
+  },
+  "devDependencies": {
+    "@types/chrome": "0.0.133"
   }
 }
