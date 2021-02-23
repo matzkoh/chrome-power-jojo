@@ -41,47 +41,59 @@ store.promise.then(() => {
     shadowRoot.querySelector('.concentration-line').removeAttribute('style')
   }, 0)
 
-  document.addEventListener('keydown', event => {
-    if (
-      !event.isTrusted ||
-      event.ctrlKey ||
-      event.metaKey ||
-      /^(?:F\d+|CapsLock|Escape|Tab)$/.test(event.code) ||
-      /^(?:Arrow|Meta|Shift|Alt|Control)/.test(event.code)
-    ) {
-      return
-    }
+  document.addEventListener(
+    'keydown',
+    event => {
+      if (
+        !event.isTrusted ||
+        event.ctrlKey ||
+        event.metaKey ||
+        /^(?:F\d+|CapsLock|Escape|Tab)$/.test(event.code) ||
+        /^(?:Arrow|Meta|Shift|Alt|Control)/.test(event.code)
+      ) {
+        return
+      }
 
-    setTimeout(setMangaEffectCenter, 0)
+      setTimeout(setMangaEffectCenter, 0)
 
-    switch (keys[event.code]) {
-      case 1:
-        keys[event.code] = 2
-        break
+      switch (keys[event.code]) {
+        case 1:
+          keys[event.code] = 2
+          break
 
-      case 2:
-        break
+        case 2:
+          break
 
-      default:
-        keys[event.code] = 1
-        toggleHtmlClass()
-        showRandomJojo()
-        break
-    }
-  })
+        default:
+          keys[event.code] = 1
+          toggleHtmlClass()
+          showRandomJojo()
+          break
+      }
+    },
+    { capture: true, passive: true },
+  )
 
-  document.addEventListener('keyup', event => {
-    if (!event.isTrusted) {
-      return
-    }
+  document.addEventListener(
+    'keyup',
+    event => {
+      if (!event.isTrusted) {
+        return
+      }
 
-    delete keys[event.code]
-    toggleHtmlClass()
-  })
+      delete keys[event.code]
+      toggleHtmlClass()
+    },
+    { capture: true, passive: true },
+  )
 
-  window.addEventListener('blur', () => {
-    keys = {}
-  })
+  window.addEventListener(
+    'blur',
+    () => {
+      keys = {}
+    },
+    { capture: true, passive: true },
+  )
 })
 
 function applyOptions() {
@@ -162,6 +174,6 @@ function showRandomJojo() {
 
   requestAnimationFrame(() => {
     outer.classList.remove('enter-active')
-    outer.addEventListener('transitionend', () => shadowRoot.removeChild(outer))
+    outer.addEventListener('transitionend', () => shadowRoot.removeChild(outer), { passive: true })
   })
 }
