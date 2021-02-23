@@ -17,12 +17,12 @@
 .concentration-line {
   position: absolute;
   top: -1rem;
+  right: -1rem;
   bottom: -1rem;
   left: -1rem;
-  right: -1rem;
   display: var(--enableConcentrationLine, grid);
-  grid-template-columns: min-content auto;
   grid-template-rows: min-content auto;
+  grid-template-columns: min-content auto;
   opacity: var(--concentrationLineOpacity);
   animation: 50ms shake linear infinite;
 }
@@ -60,8 +60,8 @@
   position: absolute;
   display: flex;
   opacity: 0;
-  transform: translate(-50%, -50%);
   transition: opacity 200ms calc(var(--effectDuration) * 1ms) ease-in;
+  transform: translate(-50%, -50%);
 }
 
 .outer.enter-active {
@@ -75,32 +75,84 @@
 }
 
 .jojo {
-  font: normal normal normal calc(var(--effectSize) * 1vmax)/1 "jojomix";
+  font: normal normal normal calc(var(--effectSize) * 1vmax) / 1 'jojomix';
 }
 
-.jojo-a::before { content: "a" }
-.jojo-b::before { content: "b" }
-.jojo-c::before { content: "c" }
-.jojo-d::before { content: "d" }
-.jojo-e::before { content: "e" }
-.jojo-f::before { content: "f" }
-.jojo-g::before { content: "g" }
-.jojo-h::before { content: "h" }
-.jojo-i::before { content: "i" }
-.jojo-j::before { content: "j" }
-.jojo-k::before { content: "k" }
-.jojo-l::before { content: "l" }
-.jojo-m::before { content: "m" }
-.jojo-n::before { content: "n" }
-.jojo-o::before { content: "o" }
-.jojo-p::before { content: "p" }
-.jojo-q::before { content: "q" }
-.jojo-r::before { content: "r" }
-.jojo-s::before { content: "s" }
-.jojo-t::before { content: "t" }
-.jojo-u::before { content: "u" }
-.jojo-v::before { content: "v" }
-.jojo-w::before { content: "w" }
-.jojo-x::before { content: "x" }
-.jojo-y::before { content: "y" }
-.jojo-z::before { content: "z" }
+.jojo-a::before {
+  content: 'a';
+}
+.jojo-b::before {
+  content: 'b';
+}
+.jojo-c::before {
+  content: 'c';
+}
+.jojo-d::before {
+  content: 'd';
+}
+.jojo-e::before {
+  content: 'e';
+}
+.jojo-f::before {
+  content: 'f';
+}
+.jojo-g::before {
+  content: 'g';
+}
+.jojo-h::before {
+  content: 'h';
+}
+.jojo-i::before {
+  content: 'i';
+}
+.jojo-j::before {
+  content: 'j';
+}
+.jojo-k::before {
+  content: 'k';
+}
+.jojo-l::before {
+  content: 'l';
+}
+.jojo-m::before {
+  content: 'm';
+}
+.jojo-n::before {
+  content: 'n';
+}
+.jojo-o::before {
+  content: 'o';
+}
+.jojo-p::before {
+  content: 'p';
+}
+.jojo-q::before {
+  content: 'q';
+}
+.jojo-r::before {
+  content: 'r';
+}
+.jojo-s::before {
+  content: 's';
+}
+.jojo-t::before {
+  content: 't';
+}
+.jojo-u::before {
+  content: 'u';
+}
+.jojo-v::before {
+  content: 'v';
+}
+.jojo-w::before {
+  content: 'w';
+}
+.jojo-x::before {
+  content: 'x';
+}
+.jojo-y::before {
+  content: 'y';
+}
+.jojo-z::before {
+  content: 'z';
+}

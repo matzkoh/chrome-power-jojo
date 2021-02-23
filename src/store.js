@@ -7,7 +7,7 @@ const defaultState = {
   effectOpacity: 1,
   effectDuration: 500,
   excludeUrls: '',
-};
+}
 
 const store = {
   state: null,
@@ -16,24 +16,24 @@ const store = {
   async load() {
     this.promise = new Promise(resolve => {
       chrome.storage.local.get(defaultState, state => {
-        this.state = state;
-        resolve();
-      });
-    });
-    return this.promise;
+        this.state = state
+        resolve()
+      })
+    })
+    return this.promise
   },
 
   async save() {
-    await this.promise;
+    await this.promise
     return new Promise(resolve => {
-      chrome.storage.local.set(this.state, resolve);
-    });
+      chrome.storage.local.set(this.state, resolve)
+    })
   },
 
   async reset() {
-    await this.promise;
-    this.state = Object.create(defaultState);
+    await this.promise
+    this.state = Object.create(defaultState)
   },
-};
+}
 
-store.load();
+store.load()

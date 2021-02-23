@@ -1,6 +1,6 @@
 @font-face {
-  font-family: "jojomix";
-  src: url("chrome-extension://__MSG_@@extension_id__/fonts/JOJOMIX_.TTF") format("truetype");
+  font-family: 'jojomix';
+  src: url('chrome-extension://__MSG_@@extension_id__/fonts/JOJOMIX_.TTF') format('truetype');
 }
 
 @keyframes jojo-effect-vibrate {
@@ -8,12 +8,15 @@
   100% {
     transform: translate(-3px, -3px);
   }
+
   25% {
     transform: translate(3px, 3px);
   }
+
   50% {
     transform: translate(-3px, 3px);
   }
+
   75% {
     transform: translate(3px, -3px);
   }
@@ -26,10 +29,10 @@
 
 #jojo-effect {
   position: fixed;
-  left: 0;
   top: 0;
+  left: 0;
+  z-index: 2147483647;
   width: 100vw;
   height: 100vh;
-  z-index: 2147483647;
   pointer-events: none;
 }
