@@ -25,7 +25,7 @@ store.promise.then(() => {
 
   const template = document.createElement('template')
   template.innerHTML = `
-    <link rel="stylesheet" href=${chrome.runtime.getURL('shadow.css')}>
+    <link rel="stylesheet" href=${chrome.runtime.getURL('content/shadow.css')}>
     <div class="concentration-line" style="display: none;">
       <div class="concentration-line-cell top-left"></div>
       <div class="concentration-line-cell top-right"></div>
@@ -33,9 +33,9 @@ store.promise.then(() => {
       <div class="concentration-line-cell bottom-right"></div>
     </div>
   `
-  shadowRoot.appendChild(template.content)
+  shadowRoot.append(template.content)
 
-  document.documentElement.appendChild(shadowHost)
+  document.documentElement.append(shadowHost)
 
   setTimeout(() => {
     shadowRoot.querySelector('.concentration-line').removeAttribute('style')
@@ -163,17 +163,23 @@ function showRandomJojo() {
   outer.style.left = `${Math.random() * 100}%`
   outer.style.top = `${Math.random() * 100}%`
 
-  const effectType = 'abcdefghijlmnopqrstuvwxyz'[(Math.random() * 25) | 0]
-  const html = [`<div class="jojo jojo-${effectType}"></div>`]
-  if ('abcdimsuw'.includes(effectType)) {
-    html.push('<div class="jojo jojo-k"></div>')
-  }
-  outer.innerHTML = ['<div class="inner">', ...html, '</div>'].join('')
+  const a2z = 'abcdefghijlmnopqrstuvwxyz'
+  const exc = 'abcdimsuw'
+  const kind = a2z[(Math.random() * a2z.length) | 0]
 
-  shadowRoot.appendChild(outer)
+  outer.innerHTML = [
+    '<div class="inner">',
+    `<div class="jojo jojo-${kind}"></div>`,
+    exc.includes(kind) && '<div class="jojo jojo-k"></div>',
+    '</div>',
+  ]
+    .filter(Boolean)
+    .join('')
+
+  shadowRoot.append(outer)
 
   requestAnimationFrame(() => {
     outer.classList.remove('enter-active')
-    outer.addEventListener('transitionend', () => shadowRoot.removeChild(outer), { passive: true })
+    outer.addEventListener('transitionend', () => outer.remove(), { once: true, passive: true })
   })
 }

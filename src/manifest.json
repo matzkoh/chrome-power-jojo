@@ -17,6 +17,6 @@
     "page": "options/options.html",
     "chrome_style": true
   },
-  "web_accessible_resources": ["shadow.css", "fonts/*", "images/*"],
+  "web_accessible_resources": ["content/shadow.css", "fonts/*", "images/*"],
   "manifest_version": 2
 }
