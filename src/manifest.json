@@ -5,6 +5,10 @@
   "icons": {
     "128": "assets/image/icon.png"
   },
+  "background": {
+    "persistent": false,
+    "scripts": ["store/index.js", "background/index.js"]
+  },
   "browser_action": {
     "default_icon": {
       "256": "assets/image/icon.png"
