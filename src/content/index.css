@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'jojomix';
-  src: url('chrome-extension://__MSG_@@extension_id__/fonts/JOJOMIX_.TTF') format('truetype');
+  src: url('chrome-extension://__MSG_@@extension_id__/assets/font/JOJOMIX_.TTF') format('truetype');
 }
 
 @keyframes jojo-effect-vibrate {

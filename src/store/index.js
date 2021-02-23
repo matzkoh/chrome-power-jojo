@@ -1,7 +1,7 @@
 const defaultState = {
   enablePageVibration: true,
   enableConcentrationLine: true,
-  concentrationLineType: 'images/manga1.svg',
+  concentrationLineType: 'assets/image/manga1.svg',
   concentrationLineOpacity: 0.2,
   effectSize: 10,
   effectOpacity: 1,
