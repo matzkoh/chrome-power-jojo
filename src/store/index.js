@@ -1,4 +1,4 @@
-const defaultState = {
+const defaultState = Object.freeze({
   enablePageVibration: true,
   enableConcentrationLine: true,
   concentrationLineType: 'assets/image/manga1.svg',
@@ -7,7 +7,7 @@ const defaultState = {
   effectOpacity: 1,
   effectDuration: 500,
   excludeUrls: '',
-}
+})
 
 const store = {
   state: null,
