@@ -7,7 +7,7 @@ const shadowRoot = shadowHost.attachShadow({ mode: 'closed' })
 shadowRoot.innerHTML = `
   <link
     rel="stylesheet"
-    href=${chrome.runtime.getURL('content/shadow.css')}
+    href="${chrome.runtime.getURL('content/shadow.css')}"
     onload="nextElementSibling.removeAttribute('style')"
   />
   <div class="concentration-line" style="display: none;">
@@ -16,7 +16,11 @@ shadowRoot.innerHTML = `
     <div class="concentration-line-cell bottom-left"></div>
     <div class="concentration-line-cell bottom-right"></div>
   </div>
+  <div class="jojo-container"></div>
 `
+
+const jojoContainer = shadowRoot.querySelector('.jojo-container')
+jojoContainer.addEventListener('transitionend', event => event.target.remove(), { passive: true })
 
 store.promise.then(() => {
   const isExcluded = store.state.excludeUrls
@@ -53,7 +57,7 @@ function init() {
         return
       }
 
-      setTimeout(setMangaEffectCenter, 0)
+      requestAnimationFrame(setMangaEffectCenter)
 
       if (!activeKeys.has(event.code)) {
         activeKeys.add(event.code)
@@ -71,19 +75,19 @@ function init() {
         return
       }
 
-      activeKeys.delete(event.code)
+      // escape hatch
+      if (event.code === 'Enter') {
+        activeKeys.clear()
+      } else {
+        activeKeys.delete(event.code)
+      }
+
       toggleHtmlClass()
     },
     { capture: true, passive: true },
   )
 
-  window.addEventListener(
-    'blur',
-    () => {
-      activeKeys.clear()
-    },
-    { capture: true, passive: true },
-  )
+  window.addEventListener('blur', () => activeKeys.clear(), { capture: true, passive: true })
 }
 
 function applyOptions() {
@@ -149,7 +153,7 @@ function setMangaEffectCenter() {
 
 function showRandomJojo() {
   const outer = document.createElement('div')
-  outer.className = 'outer enter-active'
+  outer.classList.add('outer', 'enter-active')
   outer.style.left = `${Math.random() * 100}%`
   outer.style.top = `${Math.random() * 100}%`
 
@@ -166,10 +170,9 @@ function showRandomJojo() {
     .filter(Boolean)
     .join('')
 
-  shadowRoot.append(outer)
+  jojoContainer.append(outer)
 
   requestAnimationFrame(() => {
     outer.classList.remove('enter-active')
-    outer.addEventListener('transitionend', () => outer.remove(), { once: true, passive: true })
   })
 }
